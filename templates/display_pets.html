@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/display_pets.css') }}">
+    <title>Pet Shop</title>
+{% endblock %}
+{% block content %}
+    <div class="parent">
+        <div class="container">
+            {% if pets %}
+            {% for pet in pets %}
+                <div class="pet">
+                    <img src="{{pet.photo_url}}" alt="No Photo Available">
+                    <p><strong>Name:</strong> {{pet.name}}</p>
+                    <p><strong>Species:</strong> {{pet.species}}</p>
+                    <p><strong>Age:</strong> {{pet.age}}</p>
+                    <p><strong>Notes:</strong> {{pet.notes}}</p>
+                    {% if pet.available %}
+                        <p class="available"><a href="/{{pet.id}}">Available</a></p>
+                    {% else %}
+                        <p class="taken"><a href="/{{pet.id}}">Not Available</a></p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

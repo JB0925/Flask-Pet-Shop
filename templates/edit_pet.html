@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_pet.css') }}">
+    <title>Pet Shop</title>
+{% endblock %}
+{% block content %}
+    <h1>Edit This Pet</h1>
+    <div class="parent">
+        <div class="container">
+            <div class="pet">
+                <img src="{{pet.photo_url}}" alt="No Photo Available">
+                <p><strong>Name:</strong> {{pet.name}}</p>
+                <p><strong>Species:</strong> {{pet.species}}</p>
+                <p><strong>Age:</strong> {{pet.age}}</p>
+                <p><strong>Notes:</strong> {{pet.notes}}</p>
+                {% if pet.available %}
+                    <p class="available">Available</p>
+                {% else %}
+                    <p class="taken">Not Available</p>
+                {% endif %}
+            </div>
+            <form action="{{url_for('edit_pets', id=pet.id)}}" method="POST">
+                {{form.hidden_tag()}}
+                {% for field in form if field.widget.input_type != 'hidden' %}
+                    <strong>{{field.label}}</strong>
+                    {% if field == form.notes %}
+                    {{field(rows='8', cols='40')}}
+
+                    {% else %}
+                    {{field}}
+
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="error">{{error}}</p>
+                    {% endfor %}
+                {% endfor %}
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

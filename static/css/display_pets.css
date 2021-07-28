@@ -1,0 +1,29 @@
+.pet {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 32%;
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.pet p {
+    line-height: 1.8rem;
+    margin-left: 5px;
+}
+
+.pet img {
+    width: 100%;
+}
+
+.available a{
+    color: green
+}
+
+.taken a{
+    color: rgba(255, 0, 0, 0.6);
+}

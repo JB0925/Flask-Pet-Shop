@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_pets.css') }}">
+    <title>Pet Shop</title>
+{% endblock %}
+{% block content %}
+    <div class="parent">
+        <div class="form-container">
+            <h1>Add a Pet!</h1>
+            <form action="/add" method="POST">
+                {{form.hidden_tag()}}
+                {% for field in form if field.widget.input_type != 'hidden' %}
+                    {{field.label}}
+                    {% if field == form.notes %}
+                    {{field(rows='8', cols='40')}}
+
+                    {% else %}
+                    {{field}}
+
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="error">{{error}}</p>
+                    {% endfor %}
+                {% endfor %}
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
