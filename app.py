@@ -16,12 +16,17 @@ db.create_all()
 
 @app.route('/')
 def display_pets():
+    """home page that renders all of the pets
+       and their information."""
     pets = Pet.query.all()
     return render_template('display_pets.html', pets=pets)
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_pets():
+    """Renders a form that allows you to add
+       a pet, which will then be rendered on the
+       homepage."""
     form = AddPetForm()
 
     if form.validate_on_submit():
@@ -35,6 +40,9 @@ def add_pets():
 
 @app.route('/<id>', methods=['GET', 'POST'])
 def edit_pets(id):
+    """Shows the pet's information if the pet id
+       exists, and then renders a form where the
+       user can edit the pet's information."""
     pet = Pet.query.get(id)
     form = EditPetForm()
     if pet:

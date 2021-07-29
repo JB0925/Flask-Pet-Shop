@@ -16,6 +16,7 @@ db.create_all()
 
 class PetShopTestCase(TestCase):
     def create_pet(self):
+        """Creates a pet used for testing."""
         pet = Pet(name='Harry', species='dog', photo_url='', age=4, notes='A very dirty dog.', available=True)
         db.session.add(pet)
         db.session.commit()
@@ -23,11 +24,13 @@ class PetShopTestCase(TestCase):
     
 
     def create_unadded_pet(self):
+        """Creates a pet that is used in a testing post request."""
         data = {'name': 'Steve', 'species': 'cat', 'photo_url': 'www.google.com', 'age': 4, 'notes': 'A good cat.', 'available': True}
         return data
     
 
     def delete_pet(self, pet):
+        """Deletes a pet from the test database."""
         db.session.delete(pet)
         db.session.commit()
 
@@ -41,6 +44,8 @@ class PetShopTestCase(TestCase):
     
 
     def test_display_pet(self):
+        """Testing that the homepage renders
+           and that a pet displays on the page."""
         with app.test_client() as client:
             pet = self.create_pet()
             resp = client.get('/')
@@ -51,6 +56,8 @@ class PetShopTestCase(TestCase):
     
 
     def test_add_pet(self):
+        """Tests that a post request works and adds
+           a pet to the database."""
         with app.test_client() as client:
             data = self.create_unadded_pet()
             resp = client.post('/add', data=data, follow_redirects=True)
@@ -62,6 +69,8 @@ class PetShopTestCase(TestCase):
     
 
     def test_edit_pet(self):
+        """Tests that a POST request allows a
+           user to edit a pet's information."""
         with app.test_client() as client:
             pet = self.create_pet()
             data = {'photo_url': 'www.google.com', 'notes': 'The best dirty dog!', 'available': True}
@@ -74,6 +83,7 @@ class PetShopTestCase(TestCase):
     
 
     def test_404_route(self):
+        """Tests that a 404 style page is rendered."""
         with app.test_client() as client:
             resp = client.get('/404')
             self.assertEqual(resp.status_code, 200)

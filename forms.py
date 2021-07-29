@@ -4,6 +4,7 @@ from wtforms import StringField, IntegerField, TextAreaField, SelectField
 from wtforms.validators import InputRequired, Length, Optional, NumberRange, URL, AnyOf
 
 class AddPetForm(FlaskForm):
+    """Form used to create a new pet and add it to the database."""
     name = StringField('Pet Name', validators=[InputRequired(), Length(min=3, max=20)],
                             render_kw={'placeholder': 'Enter The Pet\'s Name'})
     species = StringField('Type of Animal', validators=[InputRequired(), Length(min=3, max=50), AnyOf(['dog', 'cat', 'porcupine'])],
@@ -17,6 +18,8 @@ class AddPetForm(FlaskForm):
 
 
 class EditPetForm(FlaskForm):
+    """Form used to edit an existing pet's information, 
+       which is then saved to the database."""
     photo_url = StringField('Photo URL - optional', validators=[Optional(), URL(require_tld=True)],
                             render_kw={'placeholder': 'Enter a Valid URL'})
     notes = TextAreaField('Enter Any Notes - optional', validators=[Optional()],
